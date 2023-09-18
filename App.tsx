@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, View } from "react-native";
 import {
   useFonts,
   NunitoSans_400Regular,
@@ -10,6 +9,7 @@ import { ThemeProvider } from "styled-components/native";
 import theme from "@theme/index";
 
 import { Home } from "@screens/home";
+import { Loading } from "@components/Loading";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,11 +20,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" />
-      {!fontsLoaded ? (
-        <ActivityIndicator color="#000" size="large" />
-      ) : (
-        <Home />
-      )}
+      {fontsLoaded ? <Loading /> : <Home />}
     </ThemeProvider>
   );
 }
