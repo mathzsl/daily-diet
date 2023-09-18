@@ -1,5 +1,10 @@
 import { Text } from "react-native";
+import { Container } from "./styles";
 
 export function Home() {
-  return <Text>Home Screen</Text>;
+  return (
+    <Container>
+      <Text>Home Screen</Text>
+    </Container>
+  );
 }
