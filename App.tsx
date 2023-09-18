@@ -20,7 +20,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" />
-      {fontsLoaded ? <Loading /> : <Home />}
+      {!fontsLoaded ? <Loading /> : <Home />}
     </ThemeProvider>
   );
 }
