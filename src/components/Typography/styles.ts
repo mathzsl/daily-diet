@@ -8,11 +8,9 @@ export type TypographStyleProps = {
 };
 
 export const Title = styled.Text<TypographStyleProps>`
-  
-
   ${({ theme, weight, color, size }) => css`
     font-family: ${theme.font_family[weight ?? "regular"]};
-    color: ${theme.colors[color ?? "gray_7"]};
     font-size: ${theme.font_size[size ?? "text_md"]}px;
+    color: ${theme.colors[color ?? "gray_7"]};
   `}
 `;

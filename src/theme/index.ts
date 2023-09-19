@@ -12,7 +12,7 @@ export default {
 
     green_light: "#E5F0DB",
     green_mid: "#CBE4B4",
-    green_dak: "#639339",
+    green_dark: "#639339",
 
     red_light: "#F4E6E7",
     red_mid: "#F3BABD",
