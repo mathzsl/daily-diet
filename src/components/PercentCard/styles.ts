@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import styled from "styled-components/native";
 
 import { ArrowUpRight, ArrowLeft } from "phosphor-react-native";
@@ -12,7 +12,6 @@ type styledProps = {
 export const Container = styled(View)<styledProps>`
   padding: 16px;
   border-radius: 8px;
-  margin-top: 32px;
   position: relative;
 
   background-color: ${({ theme, variant }) =>

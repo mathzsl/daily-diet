@@ -1,4 +1,5 @@
-import { Typography } from "@components/Typography";
+import { ViewProps } from "react-native";
+
 import {
   ArrowLeftIcon,
   ArrowUpIcon,
@@ -6,7 +7,8 @@ import {
   Container,
   PercentCardStyleProps,
 } from "./styles";
-import { ViewProps } from "react-native-svg/lib/typescript/fabric/utils";
+
+import { Typography } from "@components/Typography";
 
 type PercentCardProps = ViewProps & {
   variant?: PercentCardStyleProps;
