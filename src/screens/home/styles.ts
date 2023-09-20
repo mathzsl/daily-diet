@@ -1,3 +1,4 @@
+import { Typography } from "@components/Typography";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
@@ -15,3 +16,9 @@ export const NewMealContent = styled.View`
   margin-top: 40px;
   gap: 8px;
 `;
+
+export const TitleDate = styled(Typography).attrs(({}) => ({
+  size: "text_lg",
+}))`
+  margin-bottom: 8px;
+`

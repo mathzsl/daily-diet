@@ -1,4 +1,9 @@
-import { Container, NewMealContent, PercentCardButton } from "./styles";
+import {
+  Container,
+  NewMealContent,
+  PercentCardButton,
+  TitleDate,
+} from "./styles";
 
 import { Header } from "@components/Header";
 import { PercentCard } from "@components/PercentCard";
@@ -8,9 +13,30 @@ import { Button } from "@components/Button";
 import { Plus } from "phosphor-react-native";
 
 import { useTheme } from "styled-components/native";
+import { DayListItem } from "@components/DayListItem";
+import { SectionList } from "react-native";
 
 export function Home() {
   const { colors } = useTheme();
+
+  const DATA = [
+    {
+      title: "Main dishes",
+      data: ["Pizza", "Burger", "Risotto"],
+    },
+    {
+      title: "Sides",
+      data: ["French Fries", "Onion Rings", "Fried Shrimps"],
+    },
+    {
+      title: "Drinks",
+      data: ["Water", "Coke", "Beer"],
+    },
+    {
+      title: "Desserts",
+      data: ["Cheese Cake", "Ice Cream"],
+    },
+  ];
 
   return (
     <Container>
