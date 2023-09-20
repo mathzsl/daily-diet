@@ -8,7 +8,7 @@ import {
 import { ThemeProvider } from "styled-components/native";
 import theme from "@theme/index";
 
-import { Home } from "@screens/home";
+import { Statistics } from "@screens/statistics";
 import { Loading } from "@components/Loading";
 
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="auto" />
-      {!fontsLoaded ? <Loading /> : <Home />}
+      {!fontsLoaded ? <Loading /> : <Statistics />}
     </ThemeProvider>
   );
 }

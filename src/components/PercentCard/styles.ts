@@ -10,6 +10,7 @@ type styledProps = {
 };
 
 export const Container = styled(View)<styledProps>`
+  width: 100%;
   padding: 16px;
   border-radius: 8px;
   position: relative;
