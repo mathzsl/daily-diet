@@ -17,8 +17,9 @@ export const NewMealContent = styled.View`
   gap: 8px;
 `;
 
-export const TitleDate = styled(Typography).attrs(({}) => ({
+export const DateTitle = styled(Typography).attrs(({}) => ({
   size: "text_lg",
 }))`
   margin-bottom: 8px;
-`
+  margin-top: 18px;
+`;

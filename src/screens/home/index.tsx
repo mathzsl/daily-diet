@@ -2,7 +2,7 @@ import {
   Container,
   NewMealContent,
   PercentCardButton,
-  TitleDate,
+  DateTitle,
 } from "./styles";
 
 import { Header } from "@components/Header";
@@ -21,20 +21,60 @@ export function Home() {
 
   const DATA = [
     {
-      title: "Main dishes",
-      data: ["Pizza", "Burger", "Risotto"],
+      titulo: "11.08.22",
+      data: [
+        {
+          hour: "20:00",
+          meal: "X-tudo",
+          onTheDiet: false,
+        },
+
+        {
+          hour: "20:00",
+          meal: "Teste 1",
+          onTheDiet: true,
+        },
+
+        {
+          hour: "21:00",
+          meal: "teste 3",
+          onTheDiet: false,
+        },
+      ],
     },
+
     {
-      title: "Sides",
-      data: ["French Fries", "Onion Rings", "Fried Shrimps"],
-    },
-    {
-      title: "Drinks",
-      data: ["Water", "Coke", "Beer"],
-    },
-    {
-      title: "Desserts",
-      data: ["Cheese Cake", "Ice Cream"],
+      titulo: "14.08.22",
+      data: [
+        {
+          hour: "20:00",
+          meal: "X-tudo",
+          onTheDiet: false,
+        },
+
+        {
+          hour: "20:00",
+          meal: "Teste 1",
+          onTheDiet: true,
+        },
+
+        {
+          hour: "21:00",
+          meal: "teste 3",
+          onTheDiet: false,
+        },
+        {
+          hour: "20:00",
+          meal: "X-tudo",
+          onTheDiet: false,
+        },
+
+        {
+          hour: "20:00",
+          meal: "X-tudo",
+          onTheDiet: true,
+        },
+      ],
     },
   ];
 
@@ -59,6 +99,24 @@ export function Home() {
           icon={<Plus size={18} color={colors.white} />}
         />
       </NewMealContent>
+
+      <SectionList
+        showsVerticalScrollIndicator={false}
+        sections={DATA}
+        keyExtractor={(item, index) => item.meal + index}
+        renderItem={({ item }) => (
+          <DayListItem
+            title={item.meal}
+            hours={item.hour}
+            isHealthy={item.onTheDiet}
+            onPress={() => console.log("navegando")}
+          />
+        )}
+        renderSectionHeader={({ section: { titulo } }) => (
+          <DateTitle title={titulo} />
+        )}
+        style={{ marginTop: 18 }}
+      />
     </Container>
   );
 }

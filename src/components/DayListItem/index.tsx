@@ -12,11 +12,17 @@ type DayListItemProps = TouchableOpacityProps & {
   title: string;
   hours: string;
   isHealthy: StatusStyleProps;
+  onPress: () => void;
 };
 
-export function DayListItem({title, hours, isHealthy }: DayListItemProps) {
+export function DayListItem({
+  title,
+  hours,
+  isHealthy,
+  onPress,
+}: DayListItemProps) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <HourTitle title={hours} />
 
       <MealTitle title={title} />
