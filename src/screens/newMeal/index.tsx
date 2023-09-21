@@ -13,7 +13,7 @@ import { Button } from "@components/Button";
 import { SelectButton } from "@components/SelectButton";
 
 export function NewMeal() {
-  const [onTheDiet, setOnTheDiet] = useState<boolean | undefined>();
+  const [onTheDiet, setOnTheDiet] = useState(true);
 
   return (
     <Layout headerTitle="Nova refeição">
