@@ -10,7 +10,9 @@ import theme from "@theme/index";
 
 import { Loading } from "@components/Loading";
 import { NewMeal } from "@screens/newMeal";
-import { Feedback } from "@screens/feedback";
+
+import { View } from "react-native";
+import { MealDetails } from "@screens/mealDetails";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,8 +22,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar style="auto" />
-      {!fontsLoaded ? <Loading /> : <Feedback />}
+      <View style={{ backgroundColor: theme.colors.gray_1, flex: 1 }}>
+        <StatusBar style="auto" />
+        {!fontsLoaded ? <Loading /> : <MealDetails />}
+      </View>
     </ThemeProvider>
   );
 }
