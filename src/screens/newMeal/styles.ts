@@ -35,3 +35,8 @@ export const DateBox = styled.View`
   align-items: center;
   gap: 20px;
 `;
+
+export const SelectedBox = styled(DateBox)`
+  gap: 8px;
+  margin-bottom: 100px;
+`

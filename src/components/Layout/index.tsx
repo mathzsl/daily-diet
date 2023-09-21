@@ -21,7 +21,7 @@ export function Layout({
   variant = "gray",
 }: LayoutProps) {
   return (
-    <Container>
+    <Container showsVerticalScrollIndicator={false}>
       <Header variant={variant}>
         <BackButton>
           <ButtonIcon />
