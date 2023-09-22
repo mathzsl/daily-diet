@@ -13,6 +13,7 @@ import { NewMeal } from "@screens/newMeal";
 
 import { View } from "react-native";
 import { MealDetails } from "@screens/mealDetails";
+import { EditMeal } from "@screens/editMeal";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,7 +24,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <View style={{ backgroundColor: theme.colors.gray_1, flex: 1 }}>
-        <StatusBar style="auto" />
+        <StatusBar style="inverted" />
         {!fontsLoaded ? <Loading /> : <MealDetails />}
       </View>
     </ThemeProvider>
