@@ -1,13 +1,14 @@
 import { Typography } from "@components/Typography";
 import styled from "styled-components/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Container = styled.View`
+export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.green_light};
 `;
 
 export const Header = styled.View`
-  height: 200px;
+  height: 180px;
   padding: 0px 24px;
 
   align-items: center;

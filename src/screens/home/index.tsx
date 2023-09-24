@@ -1,9 +1,12 @@
+import { SectionList } from "react-native";
 import {
   Container,
   NewMealContent,
   PercentCardButton,
   DateTitle,
 } from "./styles";
+
+import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { PercentCard } from "@components/PercentCard";
@@ -14,10 +17,14 @@ import { Plus } from "phosphor-react-native";
 
 import { useTheme } from "styled-components/native";
 import { DayListItem } from "@components/DayListItem";
-import { SectionList } from "react-native";
 
 export function Home() {
   const { colors } = useTheme();
+  const navigation = useNavigation();
+
+  function handleNavigate() {
+    navigation.navigate("statistics", { dietPercentage: "90" });
+  }
 
   const DATA = [
     {
@@ -82,7 +89,7 @@ export function Home() {
     <Container>
       <Header />
 
-      <PercentCardButton onPress={() => console.log("navigate to statistics")}>
+      <PercentCardButton onPress={handleNavigate}>
         <PercentCard
           title="90,86%"
           subtitle="das refeições dentro da dieta"

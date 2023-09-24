@@ -1,7 +1,8 @@
-import { Typography } from "@components/Typography";
 import styled from "styled-components/native";
+import { Typography } from "@components/Typography";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Content = styled.View`
+export const Content = styled(SafeAreaView)`
   flex: 1;
 `;
 
