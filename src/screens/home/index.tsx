@@ -22,10 +22,6 @@ export function Home() {
   const { colors } = useTheme();
   const navigation = useNavigation();
 
-  function handleNavigate() {
-    navigation.navigate("statistics", { dietPercentage: "90" });
-  }
-
   const DATA = [
     {
       titulo: "11.08.22",
@@ -89,7 +85,11 @@ export function Home() {
     <Container>
       <Header />
 
-      <PercentCardButton onPress={handleNavigate}>
+      <PercentCardButton
+        onPress={() =>
+          navigation.navigate("statistics", { dietPercentage: "60" })
+        }
+      >
         <PercentCard
           title="90,86%"
           subtitle="das refeições dentro da dieta"
@@ -101,7 +101,7 @@ export function Home() {
         <Typography title="Refeições" />
 
         <Button
-          onPress={() => console.log("Add maeal")}
+          onPress={() => navigation.navigate("newMeal")}
           title="Nova refeição"
           icon={<Plus size={18} color={colors.white} />}
         />

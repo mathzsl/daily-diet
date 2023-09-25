@@ -9,21 +9,27 @@ import {
   HeaderTitle,
 } from "./styles";
 
+import { useNavigation } from "@react-navigation/native";
+
 type LayoutProps = {
   headerTitle: string;
   children: ReactNode;
   variant?: HeaderStyleProps;
+  onPressBackButton: () => void;
 };
 
 export function Layout({
   headerTitle,
   children,
   variant = "gray",
+  onPressBackButton,
 }: LayoutProps) {
+  const navigation = useNavigation();
+
   return (
     <Container showsVerticalScrollIndicator={false}>
       <Header variant={variant}>
-        <BackButton>
+        <BackButton onPress={onPressBackButton}>
           <ButtonIcon />
         </BackButton>
 

@@ -8,7 +8,11 @@ import {
 } from "./styles";
 import { DetailsCard } from "@components/DetailsCard";
 
+import { useNavigation } from "@react-navigation/native";
+
 export function Statistics() {
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Header>
@@ -16,6 +20,7 @@ export function Statistics() {
           title="90,86%"
           subtitle="das refeições dentro da dieta"
           iconPosition="left"
+          onPress={() => navigation.navigate("home")}
         />
       </Header>
 
