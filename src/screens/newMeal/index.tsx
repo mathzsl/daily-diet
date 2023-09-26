@@ -20,7 +20,7 @@ import uuid from "react-native-uuid";
 import { createMeal } from "@storage/meals/createMeal";
 
 import { useNavigation } from "@react-navigation/native";
-import { dateMask, hourMask } from "@components/utils/inputMask";
+import { dateMask, hourMask } from "@utils/inputMask";
 
 export function NewMeal() {
   const navigation = useNavigation();
@@ -30,8 +30,6 @@ export function NewMeal() {
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [isOnTheDiet, setIsOnTheDiet] = useState(true);
-
-  console.log(date);
 
   async function handleRegisterNewMeal() {
     try {
@@ -76,7 +74,7 @@ export function NewMeal() {
               value={date}
               maxLength={10}
               keyboardType="numeric"
-              onChangeText={(date) => setDate(hourMask(date))}
+              onChangeText={(date) => setDate(dateMask(date))}
               style={{ flex: 1 }}
             />
           </View>

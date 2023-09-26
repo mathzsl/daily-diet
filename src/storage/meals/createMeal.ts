@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getlAllMeals } from "./getAllMeals";
 
 import { MealStorageDTO } from "./MealStorageDTO";
-import { MEAL_LIST } from "@storage/StorageConfig";
+import { MEAL_LIST } from "@storage/storageConfig";
 
 export async function createMeal(meal: MealStorageDTO) {
   try {

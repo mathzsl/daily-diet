@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Layout } from "@components/Layout";
+import { View } from "react-native";
+
 import {
   Content,
   DateBox,
@@ -8,27 +9,65 @@ import {
   TextArea,
   TextAreaContainer,
 } from "./styles";
+
 import { Input } from "@components/Input";
+import { Layout } from "@components/Layout";
 import { Button } from "@components/Button";
 import { SelectButton } from "@components/SelectButton";
+import { useNavigation } from "@react-navigation/native";
+import { dateMask, hourMask } from "@utils/inputMask";
 
 export function EditMeal() {
-  const [onTheDiet, setOnTheDiet] = useState(true);
+  const navigation = useNavigation();
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [hour, setHour] = useState("");
+  const [isOnTheDiet, setIsOnTheDiet] = useState(true);
 
   return (
-    <Layout headerTitle="Editar refeição">
+    <Layout
+      headerTitle="Editar refeição"
+      onPressBackButton={() => navigation.navigate("mealDetails", { id: "1" })}
+    >
       <Content>
-        <Input title="Nome" placeholder="Digite o nome da refeição" />
+        <Label title="Nome" />
+        <Input
+          placeholder="Digite o nome da refeição"
+          value={name}
+          onChangeText={setName}
+        />
 
         <Label title="Descrição" />
         <TextAreaContainer>
-          <TextArea />
+          <TextArea value={description} onChangeText={setDescription} />
         </TextAreaContainer>
 
         <DateBox>
-          <Input title="Data" placeholder="DD/MM/YYYY" style={{ flex: 1 }} />
+          <View style={{ flex: 1 }}>
+            <Label title="Data" />
+            <Input
+              placeholder="DD/MM/YYYY"
+              value={date}
+              maxLength={10}
+              keyboardType="numeric"
+              onChangeText={(date) => setDate(dateMask(date))}
+              style={{ flex: 1 }}
+            />
+          </View>
 
-          <Input title="Hora" placeholder="hh:mm" style={{ flex: 1 }} />
+          <View style={{ flex: 1 }}>
+            <Label title="Hora" />
+            <Input
+              placeholder="hh:mm"
+              value={hour}
+              maxLength={5}
+              onChangeText={(hour) => setHour(hourMask(hour))}
+              style={{ flex: 1 }}
+              keyboardType="numeric"
+            />
+          </View>
         </DateBox>
 
         <Label title="Está dentro da dieta?" />
@@ -36,12 +75,18 @@ export function EditMeal() {
           <SelectButton
             title="Sim"
             statusColor="green"
-            isSelected={onTheDiet}
+            isSelected={isOnTheDiet}
+            onPress={() => setIsOnTheDiet(true)}
           />
-          <SelectButton title="Não" statusColor="red" isSelected={!onTheDiet} />
+          <SelectButton
+            title="Não"
+            statusColor="red"
+            isSelected={!isOnTheDiet}
+            onPress={() => setIsOnTheDiet(false)}
+          />
         </SelectedBox>
 
-        <Button title="Salvar alterações"  />
+        <Button title="Salvar alterações" />
       </Content>
     </Layout>
   );

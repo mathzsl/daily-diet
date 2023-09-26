@@ -1,4 +1,6 @@
+import { useCallback, useState } from "react";
 import { Alert, SectionList } from "react-native";
+
 import {
   Container,
   NewMealContent,
@@ -12,22 +14,35 @@ import { Header } from "@components/Header";
 import { PercentCard } from "@components/PercentCard";
 import { Typography } from "@components/Typography";
 import { Button } from "@components/Button";
+import { DayListItem } from "@components/DayListItem";
 
 import { Plus } from "phosphor-react-native";
 
 import { useTheme } from "styled-components/native";
-import { DayListItem } from "@components/DayListItem";
+
 import { getlAllMeals } from "@storage/meals/getAllMeals";
-import { useCallback } from "react";
+import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+import { filteredMeals } from "@utils/filteredMeals";
+
+type Meals = {
+  date: string;
+  data: MealStorageDTO[];
+};
 
 export function Home() {
+  const [meals, setMeals] = useState<Meals[]>([]);
+
   const { colors } = useTheme();
+
   const navigation = useNavigation();
 
   async function fetchMeals() {
     try {
       const data = await getlAllMeals();
-      console.log(data);
+
+      const mealsList = filteredMeals(data);
+
+      setMeals(mealsList);
     } catch (error) {
       console.log(error);
       Alert.alert(
@@ -43,65 +58,6 @@ export function Home() {
       fetchMeals();
     }, [])
   );
-
-  const DATA = [
-    {
-      titulo: "11.08.22",
-      data: [
-        {
-          hour: "20:00",
-          meal: "X-tudo",
-          onTheDiet: false,
-        },
-
-        {
-          hour: "20:00",
-          meal: "Teste 1",
-          onTheDiet: true,
-        },
-
-        {
-          hour: "21:00",
-          meal: "teste 3",
-          onTheDiet: false,
-        },
-      ],
-    },
-
-    {
-      titulo: "14.08.22",
-      data: [
-        {
-          hour: "20:00",
-          meal: "X-tudo",
-          onTheDiet: false,
-        },
-
-        {
-          hour: "20:00",
-          meal: "Teste 1",
-          onTheDiet: true,
-        },
-
-        {
-          hour: "21:00",
-          meal: "teste 3",
-          onTheDiet: false,
-        },
-        {
-          hour: "20:00",
-          meal: "X-tudo",
-          onTheDiet: false,
-        },
-
-        {
-          hour: "20:00",
-          meal: "X-tudo",
-          onTheDiet: true,
-        },
-      ],
-    },
-  ];
 
   return (
     <Container>
@@ -131,18 +87,18 @@ export function Home() {
 
       <SectionList
         showsVerticalScrollIndicator={false}
-        sections={DATA}
-        keyExtractor={(item, index) => item.meal + index}
+        sections={meals}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <DayListItem
-            title={item.meal}
+            title={item.name}
             hours={item.hour}
-            isHealthy={item.onTheDiet}
+            isHealthy={item.isOnTheDiet}
             onPress={() => console.log("navegando")}
           />
         )}
-        renderSectionHeader={({ section: { titulo } }) => (
-          <DateTitle title={titulo} />
+        renderSectionHeader={({ section: { date } }) => (
+          <DateTitle title={date.replaceAll("/", ".")} />
         )}
         style={{ marginTop: 18 }}
       />

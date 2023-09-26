@@ -10,13 +10,21 @@ import { useTheme } from "styled-components/native";
 
 import { PencilSimpleLine, Trash } from "phosphor-react-native";
 import { Modal } from "@components/Modal";
+import { useNavigation } from "@react-navigation/native";
 
 export function MealDetails() {
   const { colors } = useTheme();
+
+  const navigation = useNavigation();
+
   const isVisible = true;
 
   return (
-    <Layout headerTitle="Refeição" variant="red" >
+    <Layout
+      headerTitle="Refeição"
+      variant="red"
+      onPressBackButton={() => navigation.navigate("home")}
+    >
       <Content>
         <View style={{ gap: 8 }}>
           <Typography title="Sanduíche" size="text_2xl" weight="bold" />
