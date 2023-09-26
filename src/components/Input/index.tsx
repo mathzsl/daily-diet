@@ -1,16 +1,8 @@
+import { TextInput } from "./styles";
 import { TextInputProps } from "react-native";
-import { Container, Label, TextInput } from "./styles";
 
-type InputProps = TextInputProps & {
-  title: string;
-  placeholder?: string;
-};
+type InputProps = TextInputProps & {};
 
-export function Input({ title, placeholder, ...rest }: InputProps) {
-  return (
-    <Container {...rest}>
-      <Label title={title} />
-      <TextInput placeholder={placeholder} />
-    </Container>
-  );
+export function Input({ ...rest }: InputProps) {
+  return <TextInput {...rest} />;
 }

@@ -1,4 +1,4 @@
-import { SectionList } from "react-native";
+import { Alert, SectionList } from "react-native";
 import {
   Container,
   NewMealContent,
@@ -6,7 +6,7 @@ import {
   DateTitle,
 } from "./styles";
 
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { Header } from "@components/Header";
 import { PercentCard } from "@components/PercentCard";
@@ -17,10 +17,32 @@ import { Plus } from "phosphor-react-native";
 
 import { useTheme } from "styled-components/native";
 import { DayListItem } from "@components/DayListItem";
+import { getlAllMeals } from "@storage/meals/getAllMeals";
+import { useCallback } from "react";
 
 export function Home() {
   const { colors } = useTheme();
   const navigation = useNavigation();
+
+  async function fetchMeals() {
+    try {
+      const data = await getlAllMeals();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Refeições",
+        "Não foi possível carregar a lista de refeições."
+      );
+    } finally {
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals();
+    }, [])
+  );
 
   const DATA = [
     {

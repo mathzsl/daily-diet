@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 
 import {
   Content,
@@ -20,6 +20,7 @@ import uuid from "react-native-uuid";
 import { createMeal } from "@storage/meals/createMeal";
 
 import { useNavigation } from "@react-navigation/native";
+import { dateMask } from "@components/utils/inputMask";
 
 export function NewMeal() {
   const navigation = useNavigation();
@@ -29,6 +30,8 @@ export function NewMeal() {
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [isOnTheDiet, setIsOnTheDiet] = useState(true);
+
+  console.log(date);
 
   async function handleRegisterNewMeal() {
     try {
@@ -47,46 +50,45 @@ export function NewMeal() {
     } catch (error) {}
   }
 
-  console.log(isOnTheDiet);
-
   return (
     <Layout
       headerTitle="Nova refeição"
       onPressBackButton={() => navigation.navigate("home")}
     >
       <Content>
+        <Label title="Nome" />
         <Input
-          title="Nome"
           placeholder="Digite o nome da refeição"
           value={name}
           onChangeText={setName}
         />
 
-        <Label
-          title="Descrição"
-          value={description}
-          onChangeText={setDescription}
-        />
+        <Label title="Descrição" />
         <TextAreaContainer>
-          <TextArea />
+          <TextArea value={description} onChangeText={setDescription} />
         </TextAreaContainer>
 
         <DateBox>
-          <Input
-            title="Data"
-            placeholder="DD/MM/YYYY"
-            value={date}
-            onChangeText={setDate}
-            style={{ flex: 1 }}
-          />
+          <View style={{ flex: 1 }}>
+            <Label title="Data" />
+            <Input
+              placeholder="DD/MM/YYYY"
+              value={date}
+              maxLength={10}
+              onChangeText={(date) => setDate(dateMask(date))}
+              style={{ flex: 1 }}
+            />
+          </View>
 
-          <Input
-            title="Hora"
-            placeholder="hh:mm"
-            value={hour}
-            onChangeText={setHour}
-            style={{ flex: 1 }}
-          />
+          <View style={{ flex: 1 }}>
+            <Label title="Hora" />
+            <Input
+              placeholder="hh:mm"
+              value={hour}
+              onChangeText={setHour}
+              style={{ flex: 1 }}
+            />
+          </View>
         </DateBox>
 
         <Label title="Está dentro da dieta?" />
