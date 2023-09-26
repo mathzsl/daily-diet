@@ -20,7 +20,7 @@ import uuid from "react-native-uuid";
 import { createMeal } from "@storage/meals/createMeal";
 
 import { useNavigation } from "@react-navigation/native";
-import { dateMask } from "@components/utils/inputMask";
+import { dateMask, hourMask } from "@components/utils/inputMask";
 
 export function NewMeal() {
   const navigation = useNavigation();
@@ -75,7 +75,8 @@ export function NewMeal() {
               placeholder="DD/MM/YYYY"
               value={date}
               maxLength={10}
-              onChangeText={(date) => setDate(dateMask(date))}
+              keyboardType="numeric"
+              onChangeText={(date) => setDate(hourMask(date))}
               style={{ flex: 1 }}
             />
           </View>
@@ -85,8 +86,10 @@ export function NewMeal() {
             <Input
               placeholder="hh:mm"
               value={hour}
-              onChangeText={setHour}
+              maxLength={5}
+              onChangeText={(hour) => setHour(hourMask(hour))}
               style={{ flex: 1 }}
+              keyboardType="numeric"
             />
           </View>
         </DateBox>
