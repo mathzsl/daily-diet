@@ -5,7 +5,7 @@ export declare global {
     interface RootParamList {
       home: undefined;
       statistics: {
-        dietPercentage: string;
+        mealList: MealStorageDTO[];
       };
       mealDetails: {
         meal: MealStorageDTO;

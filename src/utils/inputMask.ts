@@ -1,7 +1,7 @@
 function dateMask(date: string) {
   const value = date.replace(/\D/g, "");
 
-  const dateRegex = /^(\d{1,2})(\d{0,2})(\d{0,4})$/;
+  const dateRegex = /(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[012])(\d{4}$)/;;
 
   const formattedDate = value.replace(dateRegex, "$1/$2/$3");
   return formattedDate;

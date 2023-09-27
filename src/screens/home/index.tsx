@@ -23,6 +23,10 @@ import { useTheme } from "styled-components/native";
 import { getlAllMeals } from "@storage/meals/getAllMeals";
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
 import { filteredMeals } from "@utils/filteredMeals";
+import {
+  calculateNumberOfMeals,
+  calculatePercentage,
+} from "@utils/calculateStatistics";
 
 type Meals = {
   date: string;
@@ -31,6 +35,9 @@ type Meals = {
 
 export function Home() {
   const [meals, setMeals] = useState<Meals[]>([]);
+  const [statistics, setStatistics] = useState<MealStorageDTO[]>([]);
+
+  const percentage = calculatePercentage(statistics);
 
   const { colors } = useTheme();
 
@@ -39,6 +46,8 @@ export function Home() {
   async function fetchMeals() {
     try {
       const data = await getlAllMeals();
+
+      setStatistics(data);
 
       const mealsList = filteredMeals(data);
 
@@ -64,14 +73,14 @@ export function Home() {
       <Header />
 
       <PercentCardButton
-        onPress={() =>
-          navigation.navigate("statistics", { dietPercentage: "60" })
-        }
+        onPress={() => {
+          navigation.navigate("statistics", { mealList: statistics });
+        }}
       >
         <PercentCard
-          title="90,86%"
+          title={!percentage ? "0%" : `${percentage.toFixed(2)}%`}
           subtitle="das refeições dentro da dieta"
-          variant="green"
+          variant={percentage >= 50 ? "green" : "red"}
         />
       </PercentCardButton>
 
