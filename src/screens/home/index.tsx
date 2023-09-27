@@ -28,6 +28,8 @@ import {
   calculatePercentage,
 } from "@utils/calculateStatistics";
 
+import dayjs from "dayjs";
+
 type Meals = {
   date: string;
   data: MealStorageDTO[];
@@ -107,7 +109,7 @@ export function Home() {
           />
         )}
         renderSectionHeader={({ section: { date } }) => (
-          <DateTitle title={date.replaceAll("/", ".")} />
+          <DateTitle title={dayjs(date).format("DD/MM/YYYY")} />
         )}
         style={{ marginTop: 18 }}
       />

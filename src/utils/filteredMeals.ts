@@ -1,14 +1,26 @@
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
 
 export function filteredMeals(mealsList: MealStorageDTO[]) {
-  const filteredMealsDates = [...new Set(mealsList.map(({ date }) => date))];
+  const filteredMealsDates = [
+    ...new Set(
+      mealsList.map(({ date }) =>
+        date.split("/").reverse().join().replaceAll(",", "")
+      )
+    ),
+  ].sort();
 
   const meals = filteredMealsDates.map((date) => {
     return {
       date,
       data: mealsList
         .filter((meal) => {
-          return meal.date.includes(date);
+          const mealDate = meal.date
+            .split("/")
+            .reverse()
+            .join()
+            .replaceAll(",", "");
+
+          return mealDate.includes(date);
         })
         .sort((a, b) => {
           if (a.hour > b.hour) {
