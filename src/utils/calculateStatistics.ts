@@ -1,16 +1,31 @@
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
 
 export function calculateNumberOfMeals(mealsList: MealStorageDTO[]) {
+  let bestSequenceMealsCount = 0;
+
   const numberOfMeals = mealsList.reduce(
     (acc, meal) => {
-      meal.isOnTheDiet ? (acc.onTheDiet += 1) : (acc.offTheDiet += 1);
+      if (meal.isOnTheDiet) {
+        acc.onTheDiet++;
+        bestSequenceMealsCount++;
+
+        if (bestSequenceMealsCount > acc.bestSequenceMeals) {
+          acc.bestSequenceMeals = bestSequenceMealsCount;
+        }
+      } else {
+        acc.offTheDiet++;
+        bestSequenceMealsCount = 0;
+      }
+
       acc.totalMeals += 1;
 
+      console.log(acc);
       return acc;
     },
     {
       onTheDiet: 0,
       offTheDiet: 0,
+      bestSequenceMeals: 0,
       totalMeals: 0,
     }
   );

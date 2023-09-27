@@ -20,15 +20,16 @@ import { Plus } from "phosphor-react-native";
 
 import { useTheme } from "styled-components/native";
 
+import dayjs from "dayjs";
+
 import { getlAllMeals } from "@storage/meals/getAllMeals";
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
 import { filteredMeals } from "@utils/filteredMeals";
+
 import {
   calculateNumberOfMeals,
   calculatePercentage,
 } from "@utils/calculateStatistics";
-
-import dayjs from "dayjs";
 
 type Meals = {
   date: string;
