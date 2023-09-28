@@ -2,9 +2,16 @@ import { Typography } from "@components/Typography";
 import styled from "styled-components/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Container = styled(SafeAreaView)`
+type HeaderStyleProps = "green" | "red";
+
+type StyledProps = {
+  variant: HeaderStyleProps;
+};
+
+export const Container = styled(SafeAreaView)<StyledProps>`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.green_light};
+  background-color: ${({ theme, variant }) =>
+    variant === "green" ? theme.colors.green_light : theme.colors.red_light};
 `;
 
 export const Header = styled.View`

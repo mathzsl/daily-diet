@@ -8,18 +8,31 @@ import {
 } from "./styles";
 import { DetailsCard } from "@components/DetailsCard";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Statistics as StatisticsRoutes } from "@screens/home";
+
+type RouteParams = {
+  statistics: StatisticsRoutes;
+};
 
 export function Statistics() {
+  const route = useRoute();
+  const { statistics } = route.params as RouteParams;
+
   const navigation = useNavigation();
 
   return (
-    <Container>
+    <Container variant={statistics.percentage >= 50 ? "green" : "red"}>
       <Header>
         <PercentCard
-          title="90,86%"
+          title={
+            !statistics.percentage
+              ? "0%"
+              : `${statistics.percentage.toFixed(2)}%`
+          }
           subtitle="das refeições dentro da dieta"
           iconPosition="left"
+          variant={statistics.percentage >= 50 ? "green" : "red"}
           onPress={() => navigation.navigate("home")}
         />
       </Header>
@@ -28,23 +41,26 @@ export function Statistics() {
         <Title title="Estatísticas gerais" />
 
         <DetailsCard
-          title="22"
+          title={`${statistics.bestSequenceMeals}`}
           subtitle="melhor sequência de pratos dentro da dieta"
         />
 
-        <DetailsCard title="109" subtitle="refeições registradas" />
+        <DetailsCard
+          title={`${statistics.totalMeals}`}
+          subtitle="refeições registradas"
+        />
 
         <TotalMealsContent>
           <DetailsCard
             variant="green"
-            title="99"
+            title={`${statistics.onTheDiet}`}
             subtitle="refeições dentro da dieta"
             style={{ flex: 1 }}
           />
 
           <DetailsCard
             variant="red"
-            title="10"
+            title={`${statistics.offTheDiet}`}
             subtitle="refeições fora da dieta"
             style={{ flex: 1 }}
           />

@@ -36,11 +36,24 @@ type Meals = {
   data: MealStorageDTO[];
 };
 
+export type NumberOfMeals = {
+  onTheDiet: number;
+  offTheDiet: number;
+  bestSequenceMeals: number;
+  totalMeals: number;
+};
+
+export type Statistics = {
+  percentage: number;
+  onTheDiet: number;
+  offTheDiet: number;
+  bestSequenceMeals: number;
+  totalMeals: number;
+};
+
 export function Home() {
   const [meals, setMeals] = useState<Meals[]>([]);
-  const [statistics, setStatistics] = useState<MealStorageDTO[]>([]);
-
-  const percentage = calculatePercentage(statistics);
+  const [statistics, setStatistics] = useState<Statistics>({} as Statistics);
 
   const { colors } = useTheme();
 
@@ -50,7 +63,13 @@ export function Home() {
     try {
       const data = await getlAllMeals();
 
-      setStatistics(data);
+      const percentage = calculatePercentage(data);
+      const generaStatistics = calculateNumberOfMeals(data);
+
+      setStatistics({
+        percentage,
+        ...generaStatistics,
+      });
 
       const mealsList = filteredMeals(data);
 
@@ -77,13 +96,17 @@ export function Home() {
 
       <PercentCardButton
         onPress={() => {
-          navigation.navigate("statistics", { mealList: statistics });
+          navigation.navigate("statistics", { statistics });
         }}
       >
         <PercentCard
-          title={!percentage ? "0%" : `${percentage.toFixed(2)}%`}
+          title={
+            !statistics.percentage
+              ? "0%"
+              : `${statistics.percentage.toFixed(2)}%`
+          }
           subtitle="das refeições dentro da dieta"
-          variant={percentage >= 50 ? "green" : "red"}
+          variant={statistics.percentage >= 50 ? "green" : "red"}
         />
       </PercentCardButton>
 

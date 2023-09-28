@@ -19,7 +19,6 @@ export function calculateNumberOfMeals(mealsList: MealStorageDTO[]) {
 
       acc.totalMeals += 1;
 
-      console.log(acc);
       return acc;
     },
     {

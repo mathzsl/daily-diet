@@ -1,3 +1,4 @@
+import { Statistics } from "@screens/home";
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
 
 export declare global {
@@ -5,7 +6,7 @@ export declare global {
     interface RootParamList {
       home: undefined;
       statistics: {
-        mealList: MealStorageDTO[];
+        statistics: Statistics;
       };
       mealDetails: {
         meal: MealStorageDTO;
