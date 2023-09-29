@@ -43,8 +43,7 @@ export function NewMeal() {
       };
 
       await createMeal(newMeal);
-      Alert.alert("Refeição cadastrada com sucesso!");
-      navigation.navigate("home");
+      navigation.navigate("feedback", { isOnTheDiet });
     } catch (error) {}
   }
 

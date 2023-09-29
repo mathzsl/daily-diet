@@ -6,12 +6,21 @@ import { Button } from "@components/Button";
 import illustrationHappy from "@assets/Illustration-happy.png";
 import illustrationSad from "@assets/Illustration-sad.png";
 
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+type RouteParams = {
+  isOnTheDiet: boolean;
+};
+
 export function Feedback() {
-  const onTheDiet = true;
+  const route = useRoute();
+  const { isOnTheDiet } = route.params as RouteParams;
+
+  const navigation = useNavigation();
 
   return (
     <Container>
-      {onTheDiet ? (
+      {isOnTheDiet ? (
         <Content>
           <Typography
             title="Continue assim!"
@@ -47,7 +56,10 @@ export function Feedback() {
         </Content>
       )}
 
-      <Button title="Ir para a página inicial" />
+      <Button
+        title="Ir para a página inicial"
+        onPress={() => navigation.navigate("home")}
+      />
     </Container>
   );
 }

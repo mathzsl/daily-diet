@@ -15,7 +15,9 @@ export declare global {
         id: string;
       };
       newMeal: undefined;
-      feedback: undefined;
+      feedback: {
+        isOnTheDiet: boolean;
+      };
     }
   }
 }
