@@ -1,4 +1,5 @@
-import { View } from "react-native";
+import { useState } from "react";
+import { View, Alert } from "react-native";
 
 import { Content, Status, StatusCard } from "./styles";
 
@@ -10,35 +11,55 @@ import { useTheme } from "styled-components/native";
 
 import { PencilSimpleLine, Trash } from "phosphor-react-native";
 import { Modal } from "@components/Modal";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+import { deleteMealById } from "@storage/meals/deleteMealById";
+
+type RouteParams = {
+  meal: MealStorageDTO;
+};
 
 export function MealDetails() {
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+
   const { colors } = useTheme();
+
+  const route = useRoute();
+  const { meal } = route.params as RouteParams;
 
   const navigation = useNavigation();
 
-  const isVisible = true;
+  async function handleDeleteMeal() {
+    try {
+      await deleteMealById(meal.id);
+      navigation.navigate("home");
+      Alert.alert("Deletar refeição", "Refeição removida com sucesso. =)");
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Excluir refeição",
+        "Houve um erro ao tentar remover esta refeição."
+      );
+    }
+  }
 
   return (
     <Layout
       headerTitle="Refeição"
-      variant="red"
+      variant={meal.isOnTheDiet ? "green" : "red"}
       onPressBackButton={() => navigation.navigate("home")}
     >
       <Content>
         <View style={{ gap: 8 }}>
-          <Typography title="Sanduíche" size="text_2xl" weight="bold" />
-          <Typography
-            title="Sanduíche de pão integral com atum e salada de alface e tomate"
-            size="text_lg"
-            color="gray_6"
-          />
+          <Typography title={meal.name} size="text_2xl" weight="bold" />
+          <Typography title={meal.description} size="text_lg" color="gray_6" />
         </View>
 
         <View style={{ gap: 8 }}>
           <Typography title="Data e hora" size="text_sm" weight="bold" />
           <Typography
-            title="12/08/2022 às 16:00"
+            title={`${meal.date} às ${meal.hour}`}
             size="text_md"
             color="gray_6"
           />
@@ -46,10 +67,17 @@ export function MealDetails() {
 
         <StatusCard>
           <Status />
-          <Typography title="dentro da dieta" />
+          <Typography
+            title={meal.isOnTheDiet ? "dentro da dieta" : "fora da dieta"}
+          />
         </StatusCard>
 
-        <Modal visible={false} statusBarTranslucent />
+        <Modal
+          visible={isVisibleModal}
+          statusBarTranslucent
+          onDeleteMeal={handleDeleteMeal}
+          closeModal={() => setIsVisibleModal(false)}
+        />
 
         <View style={{ gap: 8, marginTop: 200 }}>
           <Button
@@ -58,9 +86,10 @@ export function MealDetails() {
           />
 
           <Button
-            title="Salvar alterações"
+            title="Excluir refeição"
             variant="secondary"
             icon={<Trash size={18} color={colors.gray_7} />}
+            onPress={() => setIsVisibleModal(true)}
           />
         </View>
       </Content>

@@ -1,6 +1,12 @@
 import styled from "styled-components/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type StatusStyleProps = "green" | "red";
+
+type StyledProps = {
+  variant: StatusStyleProps;
+};
+
 export const Content = styled(SafeAreaView)`
   flex: 1;
   gap: 24px;
@@ -19,9 +25,10 @@ export const StatusCard = styled.View`
   gap: 8px;
 `;
 
-export const Status = styled.View`
+export const Status = styled.View<StyledProps>`
   width: 8px;
   height: 8px;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.green_dark};
+  background-color: ${({ theme, variant }) =>
+    variant === "green" ? theme.colors.green_dark : theme.colors.red_dark};
 `;

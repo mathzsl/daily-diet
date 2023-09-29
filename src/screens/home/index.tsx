@@ -129,7 +129,7 @@ export function Home() {
             title={item.name}
             hours={item.hour}
             isHealthy={item.isOnTheDiet}
-            onPress={() => console.log("navegando")}
+            onPress={() => navigation.navigate("mealDetails", { meal: item })}
           />
         )}
         renderSectionHeader={({ section: { date } }) => (
