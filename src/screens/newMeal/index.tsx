@@ -33,6 +33,27 @@ export function NewMeal() {
 
   async function handleRegisterNewMeal() {
     try {
+      if (!name.trim() && !date.trim() && !hour.trim()) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, preencha todos os campos."
+        );
+      }
+
+      if (date.trim().length !== 10) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, digite uma data válida."
+        );
+      }
+
+      if (hour.trim().length !== 5) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, digite uma hora válida."
+        );
+      }
+
       const newMeal = {
         id: String(uuid.v4()),
         name,
