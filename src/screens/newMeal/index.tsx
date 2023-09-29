@@ -65,7 +65,10 @@ export function NewMeal() {
 
       await createMeal(newMeal);
       navigation.navigate("feedback", { isOnTheDiet });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Nova refeição", "Houve algum erro ao cadastrar a refeição.");
+    }
   }
 
   return (

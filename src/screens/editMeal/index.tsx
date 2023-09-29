@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 
 import {
   Content,
@@ -14,22 +14,79 @@ import { Input } from "@components/Input";
 import { Layout } from "@components/Layout";
 import { Button } from "@components/Button";
 import { SelectButton } from "@components/SelectButton";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { dateMask, hourMask } from "@utils/inputMask";
+
+import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
+import { updateMealById } from "@storage/meals/updateMealById";
+
+type RouteParams = {
+  meal: MealStorageDTO;
+};
 
 export function EditMeal() {
   const navigation = useNavigation();
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [hour, setHour] = useState("");
-  const [isOnTheDiet, setIsOnTheDiet] = useState(true);
+  const route = useRoute();
+  const { meal } = route.params as RouteParams;
+
+  const [name, setName] = useState(meal.name);
+  const [description, setDescription] = useState(meal.description);
+  const [date, setDate] = useState(meal.date);
+  const [hour, setHour] = useState(meal.hour);
+  const [isOnTheDiet, setIsOnTheDiet] = useState(meal.isOnTheDiet);
+  const [updatedMeal, setUpdatedMeal] = useState<MealStorageDTO>(
+    {} as MealStorageDTO
+  );
+
+  async function handleUpdateMeal() {
+    try {
+      if (!name.trim() && !date.trim() && !hour.trim()) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, preencha todos os campos."
+        );
+      }
+
+      if (date.trim().length !== 10) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, digite uma data válida."
+        );
+      }
+
+      if (hour.trim().length !== 5) {
+        return Alert.alert(
+          "Nova refeição",
+          "Por favor, digite uma hora válida."
+        );
+      }
+
+      const mealToUpdate = {
+        ...meal,
+        name,
+        description,
+        date,
+        hour,
+        isOnTheDiet,
+      };
+
+      await updateMealById(meal.id, mealToUpdate);
+      setUpdatedMeal(mealToUpdate);
+      navigation.navigate("mealDetails", { meal: mealToUpdate });
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Atualizar refeição",
+        "Houve um erro ao tentar atualizar a refeição."
+      );
+    }
+  }
 
   return (
     <Layout
       headerTitle="Editar refeição"
-      onPressBackButton={() => navigation.navigate("mealDetails", { id: "1" })}
+      onPressBackButton={() => navigation.navigate("mealDetails", { meal })}
     >
       <Content>
         <Label title="Nome" />
@@ -49,7 +106,7 @@ export function EditMeal() {
             <Label title="Data" />
             <Input
               placeholder="DD/MM/YYYY"
-              value={date}
+              value={meal.date}
               maxLength={10}
               keyboardType="numeric"
               onChangeText={(date) => setDate(dateMask(date))}
@@ -61,7 +118,7 @@ export function EditMeal() {
             <Label title="Hora" />
             <Input
               placeholder="hh:mm"
-              value={hour}
+              value={meal.hour}
               maxLength={5}
               onChangeText={(hour) => setHour(hourMask(hour))}
               style={{ flex: 1 }}
@@ -86,7 +143,7 @@ export function EditMeal() {
           />
         </SelectedBox>
 
-        <Button title="Salvar alterações" />
+        <Button title="Salvar alterações" onPress={handleUpdateMeal} />
       </Content>
     </Layout>
   );

@@ -12,7 +12,7 @@ export declare global {
         meal: MealStorageDTO;
       };
       editMeal: {
-        id: string;
+        meal: MealStorageDTO;
       };
       newMeal: undefined;
       feedback: {

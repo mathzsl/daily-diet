@@ -6,11 +6,12 @@ import { Content, Status, StatusCard } from "./styles";
 import { Layout } from "@components/Layout";
 import { Typography } from "@components/Typography";
 import { Button } from "@components/Button";
+import { Modal } from "@components/Modal";
 
 import { useTheme } from "styled-components/native";
 
 import { PencilSimpleLine, Trash } from "phosphor-react-native";
-import { Modal } from "@components/Modal";
+
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { MealStorageDTO } from "@storage/meals/MealStorageDTO";
@@ -66,7 +67,7 @@ export function MealDetails() {
         </View>
 
         <StatusCard>
-          <Status />
+          <Status variant={meal.isOnTheDiet ? "green" : "red"} />
           <Typography
             title={meal.isOnTheDiet ? "dentro da dieta" : "fora da dieta"}
           />
@@ -83,6 +84,7 @@ export function MealDetails() {
           <Button
             title="Editar refeição"
             icon={<PencilSimpleLine size={18} color={colors.white} />}
+            onPress={() => navigation.navigate("editMeal", { meal })}
           />
 
           <Button

@@ -32,6 +32,7 @@ import {
 } from "@utils/calculateStatistics";
 import { ListEmpty } from "@components/ListEmpty";
 import { Loading } from "@components/Loading";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Meals = {
   date: string;
