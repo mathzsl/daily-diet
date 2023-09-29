@@ -30,6 +30,8 @@ import {
   calculateNumberOfMeals,
   calculatePercentage,
 } from "@utils/calculateStatistics";
+import { ListEmpty } from "@components/ListEmpty";
+import { Loading } from "@components/Loading";
 
 type Meals = {
   date: string;
@@ -52,6 +54,7 @@ export type Statistics = {
 };
 
 export function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<Meals[]>([]);
   const [statistics, setStatistics] = useState<Statistics>({} as Statistics);
 
@@ -61,6 +64,8 @@ export function Home() {
 
   async function fetchMeals() {
     try {
+      setIsLoading(true);
+
       const data = await getlAllMeals();
 
       const percentage = calculatePercentage(data);
@@ -81,6 +86,7 @@ export function Home() {
         "Não foi possível carregar a lista de refeições."
       );
     } finally {
+      setIsLoading(false);
     }
   }
 
@@ -120,23 +126,31 @@ export function Home() {
         />
       </NewMealContent>
 
-      <SectionList
-        showsVerticalScrollIndicator={false}
-        sections={meals}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <DayListItem
-            title={item.name}
-            hours={item.hour}
-            isHealthy={item.isOnTheDiet}
-            onPress={() => navigation.navigate("mealDetails", { meal: item })}
-          />
-        )}
-        renderSectionHeader={({ section: { date } }) => (
-          <DateTitle title={dayjs(date).format("DD/MM/YYYY")} />
-        )}
-        style={{ marginTop: 18 }}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SectionList
+          showsVerticalScrollIndicator={false}
+          sections={meals}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <DayListItem
+              title={item.name}
+              hours={item.hour}
+              isHealthy={item.isOnTheDiet}
+              onPress={() => navigation.navigate("mealDetails", { meal: item })}
+            />
+          )}
+          ListEmptyComponent={() => (
+            <ListEmpty message="Ops, você não possui nenhuma refeição cadastrada..." />
+          )}
+          renderSectionHeader={({ section: { date } }) => (
+            <DateTitle title={dayjs(date).format("DD/MM/YYYY")} />
+          )}
+          contentContainerStyle={{ flex: 1 }}
+          style={{ marginTop: 18 }}
+        />
+      )}
     </Container>
   );
 }
