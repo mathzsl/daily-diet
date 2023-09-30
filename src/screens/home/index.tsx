@@ -32,6 +32,7 @@ import {
 } from "@utils/calculateStatistics";
 import { ListEmpty } from "@components/ListEmpty";
 import { Loading } from "@components/Loading";
+import { percentegeFormatter } from "@utils/formatter";
 
 type Meals = {
   date: string;
@@ -54,7 +55,6 @@ export type Statistics = {
 };
 
 export function Home() {
-
   const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<Meals[]>([]);
   const [statistics, setStatistics] = useState<Statistics>({} as Statistics);
@@ -110,7 +110,7 @@ export function Home() {
           title={
             !statistics.percentage
               ? "0%"
-              : `${statistics.percentage.toFixed(2)}%`
+              : `${percentegeFormatter(statistics.percentage)}%`
           }
           subtitle="das refeições dentro da dieta"
           variant={statistics.percentage >= 50 ? "green" : "red"}
