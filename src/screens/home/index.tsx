@@ -54,6 +54,7 @@ export type Statistics = {
 };
 
 export function Home() {
+
   const [isLoading, setIsLoading] = useState(true);
   const [meals, setMeals] = useState<Meals[]>([]);
   const [statistics, setStatistics] = useState<Statistics>({} as Statistics);
@@ -67,7 +68,6 @@ export function Home() {
       setIsLoading(true);
 
       const data = await getlAllMeals();
-
 
       const percentage = calculatePercentage(data);
       const generaStatistics = calculateNumberOfMeals(data);

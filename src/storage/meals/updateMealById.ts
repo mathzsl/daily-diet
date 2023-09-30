@@ -16,7 +16,10 @@ export async function updateMealById(
         ...updatedMeal,
       };
     }
+
+    return meal;
   });
+
 
   AsyncStorage.setItem(MEAL_LIST, JSON.stringify(filteredMeal));
 }
