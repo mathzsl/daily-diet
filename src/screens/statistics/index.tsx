@@ -11,6 +11,8 @@ import { DetailsCard } from "@components/DetailsCard";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Statistics as StatisticsRoutes } from "@screens/home";
 
+import { percentegeFormatter } from "@utils/formatter";
+
 type RouteParams = {
   statistics: StatisticsRoutes;
 };
@@ -28,7 +30,7 @@ export function Statistics() {
           title={
             !statistics.percentage
               ? "0%"
-              : `${statistics.percentage.toFixed(2)}%`
+              : `${percentegeFormatter(statistics.percentage)}%`
           }
           subtitle="das refeições dentro da dieta"
           iconPosition="left"

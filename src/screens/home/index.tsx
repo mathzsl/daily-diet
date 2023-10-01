@@ -30,8 +30,10 @@ import {
   calculateNumberOfMeals,
   calculatePercentage,
 } from "@utils/calculateStatistics";
+
 import { ListEmpty } from "@components/ListEmpty";
 import { Loading } from "@components/Loading";
+
 import { percentegeFormatter } from "@utils/formatter";
 
 type Meals = {
@@ -146,10 +148,11 @@ export function Home() {
             <ListEmpty message="Ops, você não possui nenhuma refeição cadastrada..." />
           )}
           renderSectionHeader={({ section: { date } }) => (
-            <DateTitle title={dayjs(date).format("DD/MM/YYYY")} />
+            <DateTitle
+              title={dayjs(date).format("DD/MM/YYYY").replaceAll("/", ".")}
+            />
           )}
-          contentContainerStyle={{ flex: 1 }}
-          style={{ marginTop: 18 }}
+          style={{ flex: 1, marginTop: 18 }}
         />
       )}
     </Container>
