@@ -152,6 +152,7 @@ export function Home() {
               title={dayjs(date).format("DD/MM/YYYY").replaceAll("/", ".")}
             />
           )}
+          contentContainerStyle={{ marginTop: "auto", marginBottom: "auto" }}
           style={{ flex: 1, marginTop: 18 }}
         />
       )}
